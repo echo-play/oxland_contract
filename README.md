@@ -11,10 +11,50 @@ The contract is currently deployed on StarkNet Sepolia testnet:
 
 ## Features
 
+### Core Features
+
 - Daily reward system
 - Experience accumulation
 - Points system
 - Token reward redemption
+
+### New Features (Version 1)
+
+- Level progression system
+- Quest and achievement system
+- Item shop with effects
+- Access control system
+
+## Contract Functions
+
+### Core Functions
+
+- `get_points`: Get player's points balance
+- `get_experience`: Get player's experience
+- `get_last_claim_timestamp`: Get last reward claim time
+- `claim_daily_rewards`: Claim daily rewards
+- `claim_points`: Redeem points for tokens
+
+### Level System Functions
+
+- `get_level`: Get player's current level
+- `get_level_exp_requirement`: Get experience required for a level
+
+### Quest System Functions
+
+- `complete_task`: Complete a task
+- `get_task_status`: Check task completion status
+- `get_task_info`: Get task details
+
+### Shop System Functions
+
+- `purchase_item`: Purchase an item
+- `get_item_info`: Get item details
+- `get_player_item_balance`: Get player's item balance
+- `get_item_effect`: Get active item effects
+- `calculate_item_cost`: Calculate item purchase cost
+- `get_item_effect_duration`: Get item effect duration
+- `get_item_effect_bonus`: Get item effect bonus
 
 ## Technical Specifications
 
@@ -30,11 +70,20 @@ The contract is currently deployed on StarkNet Sepolia testnet:
 
 ## Key Constants
 
+### Core Constants
+
 - Daily Points Reward: 1 point
 - Daily Experience Reward: 10 points
 - Minimum Experience Required for Redemption: 100
 - Points Cost for Redemption: 100
 - Maximum Token Redemption Amount: 1
+
+### New Constants (Version 1)
+
+- Base Task Points: 10
+- Base Task Experience: 5
+- Base Item Cooldown: 24 hours
+- Maximum Item Quantity: 99
 
 ## Installation and Testing
 
