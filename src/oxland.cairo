@@ -164,7 +164,42 @@ pub mod Oxland {
     fn constructor(ref self: ContractState, _token_addr: ContractAddress, _admin: ContractAddress) {
         self.token_address.write((), _token_addr);
         self.admin.write((), _admin);
-        self.initialize_game_data();
+        
+        self.level_thresholds.write(1, 0);
+        self.level_thresholds.write(2, 100);
+        self.level_thresholds.write(3, 250);
+        self.level_thresholds.write(4, 450);
+        self.level_thresholds.write(5, 700);
+        self.level_thresholds.write(6, 1000);
+        self.level_thresholds.write(7, 1350);
+        self.level_thresholds.write(8, 1750);
+        self.level_thresholds.write(9, 2200);
+        self.level_thresholds.write(10, 2700);
+
+        self.tasks.write(
+            1, 
+            Task {
+                id: 1,
+                name: 'Daily Check-in',
+                description: 'Login for rewards',
+                points_reward: 10,
+                exp_reward: 5,
+                daily: true,
+            }
+        );
+
+        self.shop_items.write(
+            1,
+            ShopItem {
+                id: 1,
+                name: 'EXP Booster',
+                description: '+50% EXP/24h',
+                points_cost: 100,
+                exp_requirement: 2,
+                max_quantity: 2,
+                cooldown: 72 * 3600,
+            }
+        );
     }
 
     #[generate_trait]
