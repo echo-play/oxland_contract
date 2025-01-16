@@ -1,10 +1,12 @@
+use starknet::{ContractAddress};
+
 #[starknet::interface]
 pub trait IOxland<TContractState> {
-    fn get_points(self: @TContractState) -> u32;
-    fn get_experience(self: @TContractState) -> u32;
-    fn get_last_claim_timestamp(self: @TContractState) -> u64;
-    fn claim_daily_rewards(ref self: TContractState);
-    fn claimPoints(ref self: TContractState, _points: u256);
+    fn get_points(self: @TContractState, address: ContractAddress) -> u32;
+    fn get_experience(self: @TContractState, address: ContractAddress) -> u32;
+    fn get_last_claim_timestamp(self: @TContractState, address: ContractAddress) -> u64;
+    fn claim_daily_rewards(ref self: TContractState, address: ContractAddress);
+    fn claim_points(ref self: TContractState, _points: u256);
 }
 
 #[starknet::contract]
@@ -49,38 +51,37 @@ pub mod Oxland {
 
     #[abi(embed_v0)]
     impl OxlandImpl of IOxland<ContractState> {
-        fn get_points(self: @ContractState) -> u32 {
-            let caller = get_caller_address();
-            self.points.read(caller)
+        fn get_points(self: @ContractState, address: ContractAddress) -> u32 {
+            self.points.read(address)
         }
 
-        fn get_experience(self: @ContractState) -> u32 {
-            let caller = get_caller_address();
-            self.experience.read(caller)
+        fn get_experience(self: @ContractState, address: ContractAddress) -> u32 {
+            self.experience.read(address)
         }
 
-        fn get_last_claim_timestamp(self: @ContractState) -> u64 {
-            let caller = get_caller_address();
-            self.last_claim_timestamp.read(caller)
+        fn get_last_claim_timestamp(self: @ContractState, address: ContractAddress) -> u64 {
+            self.last_claim_timestamp.read(address)
         }
         
-        fn claim_daily_rewards(ref self: ContractState) {
+        fn claim_daily_rewards(ref self: ContractState, address: ContractAddress) {
             let caller = get_caller_address();
+            assert(caller == address, 'Only self can claim rewards');
+            
             let current_timestamp = starknet::get_block_timestamp();
-            let last_claim = self.last_claim_timestamp.read(caller);
+            let last_claim = self.last_claim_timestamp.read(address);
             
             assert(current_timestamp >= last_claim + SECONDS_PER_DAY, 'Must wait 24 hours');
             
-            let current_points = self.points.read(caller);
-            let current_exp = self.experience.read(caller);
+            let current_points = self.points.read(address);
+            let current_exp = self.experience.read(address);
             
-            self.points.write(caller, current_points + POINTS_PER_DAY);
-            self.experience.write(caller, current_exp + EXP_PER_DAY);
+            self.points.write(address, current_points + POINTS_PER_DAY);
+            self.experience.write(address, current_exp + EXP_PER_DAY);
             
-            self.last_claim_timestamp.write(caller, current_timestamp);
+            self.last_claim_timestamp.write(address, current_timestamp);
         }
 
-        fn claimPoints(ref self: ContractState, _points: u256) {
+        fn claim_points(ref self: ContractState, _points: u256) {
             let caller = get_caller_address();
             let current_timestamp = starknet::get_block_timestamp();
             let last_claim = self.last_claim_points_timestamp.read(caller);
