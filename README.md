@@ -6,7 +6,8 @@ Oxland is a gamified smart contract system built on StarkNet that allows users t
 
 The contract is currently deployed on StarkNet Sepolia testnet:
 
-- Contract Address: [0x5e4b06e146e53ebcc5681e3096312d911e213047af5a4fa82b0c516aeb55ee2](https://sepolia.starkscan.co/contract/0x5e4b06e146e53ebcc5681e3096312d911e213047af5a4fa82b0c516aeb55ee2)
+- Contract Address(Version 0): [0x5e4b06e146e53ebcc5681e3096312d911e213047af5a4fa82b0c516aeb55ee2](https://sepolia.starkscan.co/contract/0x5e4b06e146e53ebcc5681e3096312d911e213047af5a4fa82b0c516aeb55ee2)
+- Upgrade Contract Address(Version 1): [0x500c401aa2403a36d40bca5e005be4ecf98a7842906cf6590b860082f265b95](https://sepolia.starkscan.co/contract/0x500c401aa2403a36d40bca5e005be4ecf98a7842906cf6590b860082f265b95)
 
 ## Features
 
